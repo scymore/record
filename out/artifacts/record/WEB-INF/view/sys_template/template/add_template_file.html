@@ -1,0 +1,133 @@
+[@EC.breadcrumbs/]
+<div id="page-content" class="clearfix">
+    <div class="page-header position-relative">
+        <h1>Create Template File</h1>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <form class="form-horizontal " action="${path!}/management/template/add" method="post"
+                  id="templateForm">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="control-group">
+                            <label class="control-label">Parent Folder:</label>
+                            <div class="controls">
+                                <input type="text" id="parentFolder" placeholder="" name="parentFolder" readonly="readonly" value=""/>
+                                <a class="btn btn-mini" href="javascript:CEUtil.modal.open({url:'${path}/management/template?target=parentFolder&filter=dir'})">Choose</a>
+                                <a class="btn btn-danger btn-mini" href="javascript:CEUtil.cleanVal('#parentFolder');">Clean</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="control-group">
+                            <label class="control-label">Template File Name:</label>
+
+                            <div class="controls">
+                                <input type="text" placeholder="" name="filename" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="control-group">
+                            <label class="control-label">Template File Type:</label>
+
+                            <div class="controls">
+                                <select name="extension" id="extension">
+                                    <option value="html">HTML</option>
+                                    <option value="css">CSS</option>
+                                    <option value="js">JS</option>
+                                    <option value="folder">FOLDER</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row-fluid" id="contentWrap">
+                    <div class="span12">
+                        <div class="control-group">
+                            <label class="control-label">Template Content:</label>
+
+                            <div class="controls">
+                                <textarea name="content" id="content"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-small" type="reset">
+                        <i class="icon-undo"></i> Reset
+                    </button>
+                    &nbsp; &nbsp; &nbsp;
+                    <button class="btn btn-small btn-success" type="submit" data-loading-text="Saving...">
+                        <i class="icon-ok"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- PAGE CONTENT ENDS HERE -->
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $("#extension").on("change", function () {
+            switch ($(this).val()) {
+                case "folder":
+                    $("#contentWrap").hide();
+                    break;
+                case "html":
+                    $("#contentWrap").show();
+                    changeStyle("text/html");
+                    break;
+                case "css":
+                    $("#contentWrap").show();
+                    changeStyle("text/css");
+                    break;
+                case "js":
+                    $("#contentWrap").show();
+                    changeStyle("text/javascript");
+                    break;
+            }
+        });
+
+        changeStyle("text/html");
+
+        function changeStyle(modeName) {
+            if(window.editor) {
+                window.editor.toTextArea();
+                $(".CodeMirror").remove();
+            }
+            window.editor = CodeMirror.fromTextArea($("#content")[0], {
+                mode: modeName,
+                lineNumbers: true,
+                lineWrapping: true,
+                extraKeys: {
+                    "Ctrl-Q": function (cm) {
+                        cm.foldCode(cm.getCursor());
+                    }
+                },
+                foldGutter: true,
+                gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+            });
+            var frameHeight = ($("body").innerHeight() - 400);
+            editor.setSize("100%", frameHeight);
+            editor.foldCode(CodeMirror.Pos(0, 0));
+        }
+
+        CEUtil.formValidtor.valid({
+            handler: "#templateForm",
+            rules: {
+                filename: {
+                    required: true
+                }
+            },
+            callbackFunc: function (data) {
+                refreshTree();
+            }
+        });
+    })
+
+</script>

@@ -1,0 +1,65 @@
+<div class="CE-Modal" title="Login" data-closeBtn="0">
+    <form class="form-horizontal" action="${path}/management/authorization" method="post" id="ajaxLogin">
+        <div class="modal-body">
+            <div class="control-group">
+                <label class="control-label" for="name">Username:</label>
+
+                <div class="controls">
+                    <input type="text" name="username" id="name" placeholder=""/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="password">Password:</label>
+
+                <div class="controls">
+                    <input type="password" name="password" id="password" placeholder="password">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Verify Code:</label>
+
+                <div class="controls">
+                    <input type="text" name="verifyCode" style="width:70px;" placeholder=""/>
+                    <a href="javascript:void(0);" onclick="CEUtil.verifycode(this,'${path}/management/verifycode');">Click
+                        to show verify code</a>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-small btn-primary" data-loading-text="loging..."><i class="icon-ok"></i>Login
+            </button>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $(function () {
+            var $loginForm = $("#ajaxLogin");
+            var $ajaxLoginModal = $("#ajaxLoginModal");
+            $loginForm.validate({
+                rules: loginValid.rules
+                , messages: loginValid.messages
+                , submitHandler: function (form) {
+                    var $form = $(form);
+                    var url = $form.attr("action");
+                    var method = $form.attr("method");
+                    var nvp = $form.serialize();
+                    $.ajax({
+                        url: url,
+                        type: method,
+                        data: nvp,
+                        success: function (data) {
+                            var data = eval('(' + data + ')');
+                            if (data.code == "1000") {
+                                CEUtil.msg.success("Login Success");
+                                $loginForm.closest("div.modal").modal("hide");
+                                $ajaxLoginModal.remove();
+                                CEUtil.modal.close();
+                            } else {
+                                CEUtil.msg.error("Login Failed,Error Code:" + data.code + ",Message:" + data.message);
+                            }
+                        }
+                    });
+                }
+            })
+        });
+    </script>
+</div>

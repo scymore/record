@@ -1,0 +1,26 @@
+[#if (file.children)?? && (file.children?size > 0)]
+<ul>
+	[#list file.children as file]
+	[#if file.dir]
+	<li>
+		<div class="EC-side-tree-menu-wrap">
+			<span class="folder content-link" data-realpath="${file.filepath!}">${file.filename!}</span>
+				<span class="EC-side-tree-menu">
+					<a href="javascript:void(0);" onclick="CEUtil.confirm('/management/template/delete?templateFile=${file.filepath?url}',refreshTree)" class="EC-side-tree-menu-btn edit-node">[Del]</a>
+				</span>
+		</div>
+		[#include "theme_iteration.html"/]
+	</li>
+	[#else]
+	<li>
+		<div class="EC-side-tree-menu-wrap">
+			<a class="file content-link" data-realpath="${file.filepath!}" href="javascript:void(0);">${file.filename!}</a>
+				<span class="EC-side-tree-menu">
+					<a href="javascript:void(0);" onclick="CEUtil.confirm('/management/template/delete?templateFile=${file.filepath?url}',refreshTree)" class="EC-side-tree-menu-btn edit-node">[Del]</a>
+				</span>
+		</div>
+	</li>
+	[/#if]
+	[/#list]
+</ul>
+[/#if]

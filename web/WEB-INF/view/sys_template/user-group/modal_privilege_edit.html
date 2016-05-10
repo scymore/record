@@ -1,0 +1,52 @@
+<div class="CE-Modal" title="Edit Privilege">
+    [@ec_privilege id=form.id;privilege]
+    <form class="form-horizontal" action="${path}/management/privilege/edit" method="post" id="addPrivilege">
+        <input type="hidden" name="id" value="${privilege.id!}"/>
+
+        <div class="modal-body">
+            <div class="control-group">
+                <label class="control-label" for="name">Privilege Name:</label>
+
+                <div class="controls">
+                    <input type="text" name="name" id="name" placeholder="" value="${privilege.name!}">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="uri">URI:</label>
+
+                <div class="controls">
+                    <input type="text" name="uri" id="uri" placeholder="" value="${privilege.uri!}">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-small" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary btn-small" data-loading-text="Saving..."><i
+                    class="icon-ok"></i>Save
+            </button>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $(function () {
+            CEUtil.formValidtor.modalValid({
+                handler: "#addPrivilege",
+                rules: {
+                    name: {
+                        required: true
+                        , remote: "${path}/management/privilege?id=${privilege.id!}&func=exist"
+                    },
+                    url: {
+                        required: false
+                    }
+                }
+                , messages: {
+                    name: {
+                        remote: "Privilege Name has been used,please change another one."
+                    }
+                }
+            })
+        });
+    </script>
+    [/@ec_privilege]
+</div>
+

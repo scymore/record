@@ -1,0 +1,78 @@
+<div class="CE-Modal" title="Choose File">
+    <div class="modal-body">
+        <ul id="templateFiles" class="filetree">
+            [@ec_templateFiles queryType="tree" filter="${filter!}";files]
+            [#list files as file]
+            [#if file.dir]
+            <li>
+                <div class="EC-side-tree-menu-wrap">
+                    <span class="folder content-link ${filter!}"
+                          data-realpath="${file.filepath!}">${file.filename!}</span>
+                </div>
+                [#include "data/template_file_iteration.html"/]
+            </li>
+            [#else]
+            <li>
+                <div class="EC-side-tree-menu-wrap">
+                    <span class="file content-link" data-realpath="${file.filepath!}">${file.filename!}</span>
+                </div>
+            </li>
+            [/#if]
+            [/#list]
+            [/@ec_templateFiles]
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Cancel</button>
+        <button type="submit" class="btn btn-small btn-primary" id="templateFileConfirm"><i class="icon-ok"></i>Confirm
+        </button>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+            var $root = $("#templateFiles");
+            var target = "#${target!}";
+            var $modal = $root.closest(".modal");
+            $root.treeview({
+                unique: true,
+                collapsed: true
+            });
+
+            $("#templateFiles .file").on("click", function () {
+                chooseStyle(this);
+            });
+            $("#templateFiles .dir").on("click", function () {
+                chooseStyle(this);
+            });
+
+            $("#templateFiles .file").on("dblclick", function () {
+                chooseVal();
+            });
+            $("#templateFiles .dir").on("dblclick", function () {
+                chooseVal();
+            });
+
+            $("#templateFileConfirm").on("click", function () {
+                chooseVal();
+            });
+            function chooseStyle(self) {
+                var $e = $root.data("checked");
+                if ($e != null) {
+                    $e.parent("div").removeClass("tree-checked");
+                }
+
+                var $self = $(self);
+                $root.data("checked", $self);
+                $self.parent("div").addClass("tree-checked");
+            }
+
+            function chooseVal() {
+                var $e = $root.data("checked");
+                if ($e != null) {
+                    $(target).val($e.data("realpath"));
+                }
+                CEUtil.modal.close();
+            }
+
+        });
+    </script>
+</div>

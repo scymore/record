@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<init-conf>
+	<!-- 无权限URI -->
+	<no-permission-uri>/nopermisson</no-permission-uri>
+
+	<!-- 后台登录URI -->
+	<backend-login-uri>/management/authorization</backend-login-uri>
+
+	<!-- 后台需要检查的URI前缀 -->
+	<backend-check-prefix>/management</backend-check-prefix>
+
+	<!-- 登录后无需检查URI,可使用通配符* -->
+	<login-uncheck>
+		<uri>/management/index</uri>
+		<uri>/management/*overview</uri>
+		<uri>/management/personal*</uri>
+		<uri>/management/init</uri>
+		<uri>/management/dashboard</uri>
+		<uri>/management/menu/refresh</uri>
+		<uri>/management/content/template</uri>
+		<uri>/management/upload</uri>
+	</login-uncheck>
+
+	<!-- 一直无需检查URI,可使用通配符* -->
+	<always-uncheck>
+		<uri>/management/authorization*</uri>
+		<uri>/management/verifycode*</uri>
+		<uri>/gnum/log*</uri>
+		<uri>/applog/*</uri>
+		<uri>/</uri>
+		<uri>/ckfinder/*</uri>
+	</always-uncheck>
+
+	<!-- 无需进行url encode -->
+	<charactor_unencode>
+		<!--<uri>/resources/ckfinder/core/connector/java/connector.java</uri>-->
+	</charactor_unencode>
+
+	<!-- POST请求进行 encode -->
+	<charactor_post_encode>
+		<!--<uri>/resources/ckfinder/core/connector/java/connector.java</uri>-->
+	</charactor_post_encode>
+
+
+	<!-- 不需要自动跳转URI,可使用通配符* -->
+	<always-unreturn>
+	</always-unreturn>
+	
+	<!-- 默认主题目录 -->
+	<default-theme-dir>wiki</default-theme-dir>
+</init-conf>

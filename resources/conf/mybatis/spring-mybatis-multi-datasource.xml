@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans   
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
+    http://www.springframework.org/schema/tx  
+    http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
+    http://www.springframework.org/schema/context  
+    http://www.springframework.org/schema/context/spring-context-3.0.xsd  
+    http://www.springframework.org/schema/data/jpa   
+    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd  
+    http://www.springframework.org/schema/aop  
+    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+
+	<bean id="c3p0DataSources" class="com.globalroam.monitor.datasource.C3P0DataSources">
+		<property name="defaultMapperLocation">
+			<list>
+				<!-- 表示在com.hoo目录下的任意包下的resultmap包目录中，以-resultmap.xml或-mapper.xml结尾所有文件 -->
+				<value>classpath:com/globalroam/monitor/mybatis/dao/*-mapper.xml</value>
+			</list>
+		</property>
+	</bean>
+
+</beans>

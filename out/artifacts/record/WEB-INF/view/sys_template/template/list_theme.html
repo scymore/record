@@ -1,0 +1,34 @@
+            <script type="text/javascript">
+                function reloadTheme() {
+                    CEUtil.loadFile('/management/template');
+                }
+            </script>
+[@ec_theme queryType="list" enable = 0;list]
+            [#if list?? && (list?size > 0)]
+            <h3 class="header smaller lighter green"><i class="icon-bullhorn"></i> Theme List</h3>
+            <ul class="ace-thumbnails">
+                [#list list as theme]
+                <li>
+                    <a href="javascript:void(0);" data-rel="colorbox">
+                        <img alt="150x150" src="${(theme.previewImg)!}" class="EC-theme-img">
+
+                        <div class="tags">
+                            <span class="label label-important">${(theme.themeName)!}</span>
+                            <span class="label label-info">${(theme.updateDate?string("yyyy.MM.dd"))!}</span>
+                        </div>
+                        <div class="text">
+                            <div class="inner">${(theme.description)!}</div>
+                        </div>
+                    </a>
+
+                    <div class="tools tools-bottom">
+                        <a href="javascript:CEUtil.confirm('/management/theme/enable?themeId=${(theme.id)!}','Do you want to enable this theme?',reloadTheme)"><i class="icon-check">Enable</i></a>
+                        <a href="javascript:CEUtil.confirm('/management/theme/delete?themeId=${(theme.id)!}',reloadTheme)""><i class="icon-remove red">Remove</i></a>
+                    </div>
+                </li>
+                [/#list]
+            </ul>
+            [#else]
+            <p class="alert alert-warning">No other themes found!</p>
+            [/#if]
+            [/@ec_theme]

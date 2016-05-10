@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="record:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/record</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="record" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="application" name="freemarker-2.3.19" />
+          <element id="library" level="project" name="activation-1.1" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="record/web/Web" />
+    </root>
+  </artifact>
+</component>

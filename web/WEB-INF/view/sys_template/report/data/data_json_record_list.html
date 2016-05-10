@@ -1,0 +1,28 @@
+[@record_stat projectName="${projectName!'GNUM'}"
+              fromDate="${fromDate!.now?string('yyyy-MM-dd')}"
+              toDate="${toDate!.now?string('yyyy-MM-dd')}"
+              pageSize="${pageSize!10}"
+              pageNum="${pageNum!1}"
+              userId="${userId!0}";
+recordLists,total]
+{
+"recordsFiltered":${total!0},
+"recordsTotal":${total!0},
+"data":[
+    [#list recordLists as record]
+    {
+    "no":${record.no},
+    "date":"${record.date?string("yyyy-MM-dd")!'-'}",
+    "id":${record.id!'-'},
+    "name":${record.name!'-'},
+    "value":${record.value!'-'},
+    "userId":${record.userId!'-'},
+    "links":"-"
+    }
+    [#if (record_index + 1) < (recordLists?size)]
+    ,
+    [/#if]
+    [/#list]
+    ]
+}
+[/@record_stat]

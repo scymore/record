@@ -1,0 +1,57 @@
+<ul id="sideTemplateTree" class="filetree">
+	[@ec_templateFiles queryType="tree";files]
+	[#if files?? && (files?size > 0)]
+	[#list files as file]
+	[#if file.dir]
+	<li>
+		<div class="EC-side-tree-menu-wrap">
+			<span class="folder content-link" data-realpath="${file.filepath!}">${file.filename!}</span>
+			<span class="EC-side-tree-menu">
+				<a href="javascript:void(0);" onclick="CEUtil.confirm('/management/template/delete?templateFile=${file.filepath?url}',refreshTree)" class="EC-side-tree-menu-btn">[Del]</a>
+			</span>
+		</div>
+		[#include "data/theme_iteration.html"/]
+	</li>
+	[#else]
+	<li>
+		<div class="EC-side-tree-menu-wrap">
+			<a class="file content-link" data-realpath="${file.filepath!}" href="javascript:void(0);">${file.filename!}</a>
+			<span class="EC-side-tree-menu">
+				<a href="javascript:void(0);" onclick="CEUtil.confirm('/management/template/delete?templateFile=${file.filepath?url}',refreshTree)" class="EC-side-tree-menu-btn">[Del]</a>
+			</span>
+		</div>
+	</li>
+	[/#if]
+	[/#list]
+	[/#if]
+	[/@ec_templateFiles]
+</ul>
+
+<script type="text/javascript">
+	$(function(){
+		var $root = $("#sideTemplateTree");
+		$root.treeview({
+			collapsed: true
+		});
+
+		$("#sideTemplateTree .content-link").on("click",function(){
+			var $e = $root.data("checked");
+			if($e != null) {
+				$e.parent("div").removeClass("tree-checked");
+			}
+
+			var $self = $(this);
+			$root.data("checked",$self);
+			$self.parent("div").addClass("tree-checked");
+			showForm();
+		})
+
+		function showForm() {
+			var $e = $root.data("checked");
+			if($e != null) {
+				CEUtil.loadFile('/management/template/edit?templateFile=' + $e.data("realpath"),"#themeContainer");
+
+			}
+		}
+	});
+</script>

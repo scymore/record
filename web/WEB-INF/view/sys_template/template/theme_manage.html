@@ -1,0 +1,61 @@
+[@EC.breadcrumbs/]
+
+<div id="page-content" class="clearfix">
+    <div class="page-header position-relative">
+        <h3 class="header smaller lighter"><i class="icon-bullhorn"></i> Current Theme</h3>
+    </div>
+    <!--/page-header-->
+
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="well">
+                <div>
+                    <img alt="150x150" src="${(currentTheme.previewImg)!}"
+                         class="img-responsive img-thumbnail EC-theme-img-open" style="float: left"/>
+                    <dl class="dl-horizontal" style="float: left">
+                        <dt>Theme Name</dt>
+                        <dd>${(currentTheme.themeName)!}</dd>
+                        <dt>Description</dt>
+                        <dd>${(currentTheme.description)!}</dd>
+                        <dt>Author</dt>
+                        <dd>${(currentTheme.author)!}</dd>
+                        <dt>Update Date</dt>
+                        <dd>${(currentTheme.updateDate?string("yyyy.MM.dd"))!}</dd>
+                    </dl>
+                    <div style="clear: both"></div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="span6">
+            <p>
+                [@ec_privilege_check uri="/management/theme/upload"]
+                <button class="btn btn-app btn-purple btn-small" id="themeUpload">
+                    <i class="icon-cloud-upload"></i>
+                    Upload
+                </button>
+                [@EC.form_upload
+                click="themeUpload"
+                dialogTitle = "Upload Theme"
+                relativeUrl = "${path}/management/theme/upload"
+                filters = "zip"
+                callback="refreshThemes()"
+                /]
+                [/@ec_privilege_check]
+            </p>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12" id="themeList">
+            [#include "list_theme.html"/]
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function refreshThemes() {
+        CEUtil.loadFile("/management/theme?command=refreshThemes","#themeList");
+    }
+</script>

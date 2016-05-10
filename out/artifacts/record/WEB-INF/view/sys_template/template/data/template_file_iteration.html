@@ -1,0 +1,20 @@
+[#if (file.children)?? && (file.children?size > 0)]
+<ul>
+	[#list file.children as file]
+    [#if file.dir]
+		<li>
+			<div class="EC-side-tree-menu-wrap">
+				<span class="folder content-link ${filter!}" data-realpath="${file.filepath!}">${file.filename!}</span>
+			</div>
+			[#include "template_file_iteration.html"/]
+		</li>
+     [#else]
+		<li>
+			<div class="EC-side-tree-menu-wrap">
+				<span class="file content-link" data-realpath="${file.filepath!}">${file.filename!}</span>
+			</div>
+		</li>
+    [/#if]
+	[/#list]
+</ul>
+[/#if] 

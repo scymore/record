@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/../GRMonitor/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/globalroam/monitor/action/RecordController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/globalroam/monitor/common/MDSSqlSession.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/globalroam/monitor/dao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/globalroam/monitor/directive/RecordDirective.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/globalroam/monitor/domain/DataTable.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/globalroam/monitor/domain/Record.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/globalroam/monitor/service/Impl/RecordServiceImpl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/globalroam/monitor/service/RecordService.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/com/globalroam/monitor/utils/testMail.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/resources/acestyle" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/resources/ckeditor" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/resources/ckfinder" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/resources/css" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/resources/images" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/web/resources/js" charset="UTF-8" />
+  </component>
+</project>
