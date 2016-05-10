@@ -1,9 +1,15 @@
 package com.globalroam.monitor.action;
 
+import com.globalroam.monitor.service.RecordService;
+import com.grcms.common.util.CommonUtility;
+import com.grcms.core.response.JsonResponse;
 import com.grcms.core.util.CMSInit;
 import com.grcms.core.util.ForwardUtility;
+import com.grcms.core.util.HttpUtility;
 import com.grcms.management.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -18,6 +24,9 @@ import java.util.Calendar;
 @Controller
 @RequestMapping("/management/record")
 public class RecordController {
+
+    @Autowired
+    RecordService recordService;
 
     /**
      * 跳转到用户报表页面
@@ -48,16 +57,74 @@ public class RecordController {
         request.setAttribute("projectName", user.getProject());
         request.setAttribute("fromDate", fromDate);
         request.setAttribute("toDate", toDate);
-        request.setAttribute("userId",user.getId());
+        request.setAttribute("userId", user.getId());
         return ForwardUtility.forwardAdminView("/report/data/data_json_record_list");
     }
 
+    @RequestMapping(value = "delete",method = RequestMethod.GET)
+    public void delete(HttpServletRequest request, HttpServletResponse response){
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        User user = (User) request.getSession().getAttribute(CMSInit.CMS_USER_KEY);
+        recordService.delete(id, user.getProject());
+        HttpUtility.writeToClient(response, CommonUtility.toJson(new JsonResponse()));
+    }
+
+    @RequestMapping(value = "add",method = RequestMethod.GET)
+    public String goAdd(HttpServletRequest request,HttpServletResponse response){
+        return ForwardUtility.forwardAdminView("/report/add_record");
+    }
+
+    @RequestMapping(value = "add",method = RequestMethod.POST)
+    public void addRecord(HttpServletRequest request, HttpServletResponse response){
+        String recordName = request.getParameter("recordName");
+        String recordValue = request.getParameter("recordValue");
+
+        Assert.notNull(recordName);
+        Assert.notNull(recordValue);
+
+        User user = (User) request.getSession().getAttribute(CMSInit.CMS_USER_KEY);
+        recordService.add(recordName ,recordValue , user.getProject(),user.getId());
+        HttpUtility.writeToClient(response, CommonUtility.toJson(new JsonResponse()));
+    }
+
+    @RequestMapping(value = "update",method = RequestMethod.GET)
+    public String goUpdate(HttpServletRequest request,HttpServletResponse response){
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        String recordName = request.getParameter("recordName");
+        String recordValue = request.getParameter("recordValue");
+
+        Assert.notNull(id);
+        Assert.notNull(recordName);
+        Assert.notNull(recordValue);
+
+        request.setAttribute("id", id);
+        request.setAttribute("recordName", recordName);
+        request.setAttribute("recordValue", recordValue);
+
+        return ForwardUtility.forwardAdminView("/report/update_record");
+    }
+
+    @RequestMapping(value = "update",method = RequestMethod.POST)
+    public void updateRecord(HttpServletRequest request,HttpServletResponse response){
+        Integer id = Integer.parseInt(request.getParameter("id"));
+        String recordName = request.getParameter("recordName");
+        String recordValue = request.getParameter("recordValue");
+
+        Assert.notNull(id);
+        Assert.notNull(recordName);
+        Assert.notNull(recordValue);
+
+        User user = (User) request.getSession().getAttribute(CMSInit.CMS_USER_KEY);
+        recordService.update(id, recordName, recordValue, user.getProject());
+
+        HttpUtility.writeToClient(response, CommonUtility.toJson(new JsonResponse()));
+    }
+
     /**
-     * 获取前一天的日期
+     * 获取当前的日期
      */
     private String defaultDate() {
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DAY_OF_MONTH, -1);
         return new SimpleDateFormat("yyyy-MM-dd").format(calendar.getTime());
     }
 }

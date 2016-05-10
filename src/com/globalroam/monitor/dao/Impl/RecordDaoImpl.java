@@ -45,7 +45,7 @@ public class RecordDaoImpl implements RecordDao {
         params.put("endIndex", (pageNum * pageSize));
         params.put("fromDate", fromDate);
         params.put("toDate", toDate);
-        params.put("format", "yyyy-MM-dd");
+        params.put("format", "%Y-%c-%d %h:%i:%s");
         params.put("userId",userId);
 
         String method = this.getClass().getName() + "." + "getAll";
@@ -53,5 +53,39 @@ public class RecordDaoImpl implements RecordDao {
         logger.debug("execute: " + method);
 
         return sqlSession.selectList(method, params);
+    }
+
+    @Override
+    public Integer delete(Integer id,String projectName) {
+        sqlSession = mdsSqlSession.getSQLSession(projectName);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("id",id);
+        String method = this.getClass().getName() + "." + "delete";
+        logger.debug("execute:" + method);
+        return sqlSession.delete(method,params);
+    }
+
+    @Override
+    public Integer add(String recordName, String recordValue, String projectName,Integer id) {
+        sqlSession = mdsSqlSession.getSQLSession(projectName);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("recordName",recordName);
+        params.put("recordValue",recordValue);
+        params.put("id",id);
+        String method = this.getClass().getName() + "." + "add";
+        logger.debug("execute:" + method);
+        return sqlSession.insert(method,params);
+    }
+
+    @Override
+    public Integer update(Integer id, String recordName, String recordValue, String projectName) {
+        sqlSession = mdsSqlSession.getSQLSession(projectName);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("recordName",recordName);
+        params.put("recordValue",recordValue);
+        params.put("id",id);
+        String method = this.getClass().getName() + "." + "update";
+        logger.debug("execute:" + method);
+        return sqlSession.insert(method, params);
     }
 }

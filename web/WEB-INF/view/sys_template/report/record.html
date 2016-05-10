@@ -11,6 +11,12 @@
                     [/@ec_privilege_check]
                     <div class="widget-toolbar">
                         <div class="btn-group">
+                            [@ec_privilege_check uri="/management/record/add"]
+                            <button class="btn btn-small btn-success"
+                                    onclick="CEUtil.modal.open({url:'${path}/management/record/add'});">
+                                <i class="icon-plus"></i>Add
+                            </button>
+                            [/@ec_privilege_check]
                             <button class="btn btn-small btn-info" onclick="CEUtil.dataTable.refresh();">
                                 <i class="icon-refresh"></i>Refresh
                             </button>
@@ -35,7 +41,7 @@
                                     <!-- 设置日期最大不超过今天,最小不小于fromDate -->
                                     [#assign max=.now?string('yyyy-MM-dd')/]
                                     <input id="toDate" name="toDate" class="Wdate"
-                                           onfocus="WdatePicker({minDate:'#F{$dp.$D(\'fromDate\')}',maxDate:'${max}'})"
+                                           onfocus="WdatePicker({minDate:'#F{$dp.$D(\'fromDate\')}'})"
                                            readonly="readonly" value="${date!}"/>
                                 </div>
 
@@ -54,7 +60,7 @@
                                 <th>Name</th>
                                 <th>Value</th>
                                 <th>User ID</th>
-                                <th class="hidden">OPERATION</th>
+                                <th>OPERATION</th>
                             </tr>
                             </thead>
 

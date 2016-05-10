@@ -1,0 +1,47 @@
+<div class="CE-Modal" title="Add Block">
+    <form class="form-horizontal" action="${path}/management/record/update" method="post" id="updateRecord">
+        <div class="modal-body">
+            <div class="control-group">
+                <label class="control-label">Record Name:</label>
+
+                <div class="controls">
+                    <input type="text" id="recordName" name="recordName" value="${recordName}"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">Record Value:</label>
+
+                <div class="controls">
+                    <input type="text" name="recordValue" id="recordValue" placeholder="" value="${recordValue}">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input class="hidden" name="id" value="${id}">
+            <button type="button" class="btn btn-small btn-default" data-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-small btn-primary" data-loading-text="Saving..."><i class="icon-ok"></i>Save
+            </button>
+        </div>
+    </form>
+    <script type="text/javascript">
+        $(function () {
+            CEUtil.formValidtor.modalValid({
+                handler: "#updateRecord",
+                rules: {
+                    loginId: {
+                        required: true
+                        , remote: "${path}/management/record?func=exist"
+                    },
+                    blockValue: {
+                        required: true
+                    }
+                }
+                , messages: {
+                    loginId: {
+                        remote: "The block value has been used,please change another one."
+                    }
+                }
+            })
+        });
+    </script>
+</div>

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class RecordServiceImpl implements RecordService {
 
     @Autowired
-    RecordDao userStatDao;
+    RecordDao recordDao;
 
     /**
      * 获取相关信息
@@ -28,7 +28,22 @@ public class RecordServiceImpl implements RecordService {
     @Override
     public DataTable<Record> getRecordList(String projectName, String fromDate, String toDate, String dataSource,Integer userId,Integer pageNum, Integer pageSize) {
         DataTable<Record> userStatDataTable = new DataTable<Record>();
-        userStatDataTable.setDatas(userStatDao.getAll(projectName, fromDate, toDate, dataSource,userId,pageNum,pageSize));
+        userStatDataTable.setDatas(recordDao.getAll(projectName, fromDate, toDate, dataSource,userId,pageNum,pageSize));
         return userStatDataTable;
+    }
+
+    @Override
+    public Integer delete(Integer id,String projectName) {
+        return recordDao.delete(id,projectName);
+    }
+
+    @Override
+    public Integer add(String recordName, String recordValue, String projectName,Integer id) {
+        return recordDao.add(recordName,recordValue,projectName,id);
+    }
+
+    @Override
+    public Integer update(Integer id, String recordName, String recordValue, String projectName) {
+        return recordDao.update(id,recordName,recordValue,projectName);
     }
 }

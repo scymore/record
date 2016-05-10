@@ -1,28 +1,47 @@
 [@record_stat projectName="${projectName!'GNUM'}"
-              fromDate="${fromDate!.now?string('yyyy-MM-dd')}"
-              toDate="${toDate!.now?string('yyyy-MM-dd')}"
-              pageSize="${pageSize!10}"
-              pageNum="${pageNum!1}"
-              userId="${userId!0}";
+fromDate="${fromDate!.now?string('yyyy-MM-dd')}"
+toDate="${toDate!.now?string('yyyy-MM-dd')}"
+pageSize="${pageSize!10}"
+pageNum="${pageNum!1}"
+userId="${userId!0}";
 recordLists,total]
 {
 "recordsFiltered":${total!0},
 "recordsTotal":${total!0},
 "data":[
-    [#list recordLists as record]
-    {
-    "no":${record.no},
-    "date":"${record.date?string("yyyy-MM-dd")!'-'}",
-    "id":${record.id!'-'},
-    "name":${record.name!'-'},
-    "value":${record.value!'-'},
-    "userId":${record.userId!'-'},
-    "links":"-"
-    }
-    [#if (record_index + 1) < (recordLists?size)]
-    ,
-    [/#if]
-    [/#list]
-    ]
+[#list recordLists as record]
+{
+"no":"${record_index + 1}",
+"date":"${record.date?string("yyyy-MM-dd")!'-'}",
+"id":"${record.id!'0'}",
+"name":"${record.name!'0'}",
+"value":"${record.value!'0'}",
+"userId":"${record.userId!'0'}",
+"links":[
+
+[@ec_privilege_check uri="/management/record/delete"]
+{
+"title":"${AUTH_MENU.name!}",
+"onclick":"CEUtil.confirm('${AUTH_MENU.privilege.uri!}?id=${record.id!}')",
+"icon":"icon-trash",
+"clz":"btn-danger"
+},
+[/@ec_privilege_check]
+
+[@ec_privilege_check uri="/management/record/update"]
+{
+"title":"${AUTH_MENU.name!}",
+"onclick":"CEUtil.modal.open({url:'${path}${AUTH_MENU.privilege.uri!}?id=${record.id}&recordName=${record.name}&recordValue=${record.value}'})",
+"icon":"icon-edit",
+"clz":"btn-info"
+}
+[/@ec_privilege_check]
+]
+}
+[#if (record_index + 1) < (recordLists?size)]
+,
+[/#if]
+[/#list]
+]
 }
 [/@record_stat]
