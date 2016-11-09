@@ -28,16 +28,15 @@
             CEUtil.formValidtor.modalValid({
                 handler: "#updateRecord",
                 rules: {
-                    loginId: {
+                    recordName: {
                         required: true
-                        , remote: "${path}/management/record?func=exist"
                     },
-                    blockValue: {
+                    recordValue: {
                         required: true
                     }
                 }
                 , messages: {
-                    loginId: {
+                    recordName: {
                         remote: "The block value has been used,please change another one."
                     }
                 }

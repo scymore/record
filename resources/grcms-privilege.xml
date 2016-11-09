@@ -1,6 +1,24 @@
 <privilege-config>
+	<!--
+		添加一个功能需要在此处添加一个privilege
+		<name>功能名称</name>
+		<url>功能url</url>
+	-->
 	<privilege>
 		<name>日常记录</name>
 		<url>/management/record/list</url>
 	</privilege>
+	<privilege>
+		<name>添加记录</name>
+		<url>/management/record/add</url>
+	</privilege>
+	<privilege>
+		<name>删除记录</name>
+		<url>/management/record/delete</url>
+	</privilege>
+	<privilege>
+		<name>修改记录</name>
+		<url>/management/record/update</url>
+	</privilege>
+
 </privilege-config>

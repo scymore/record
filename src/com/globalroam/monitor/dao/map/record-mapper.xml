@@ -41,7 +41,7 @@
 			  VALUE(NOW(),
 			  #{recordName},
 			  #{recordValue},
-			  #{id});
+			  #{id})
         ]]>
 	</select>
 
@@ -50,7 +50,22 @@
 			  update record
 			  SET Record_Name = #{recordName} ,
 			  		Record_Value = #{recordValue}
-			  Where id = #{id};
+			  Where id = #{id}
+        ]]>
+	</select>
+
+	<select id="exist" resultMap="recordList" parameterType="java.util.Map">
+		<![CDATA[
+			  SELECT
+				ID AS ID,
+				Date_Time AS DateTime,
+				Record_Name AS RecordName,
+				Record_Value AS RecordValue,
+				UserId AS UserId
+			  FROM
+				record
+			  WHERE
+				Record_Name = #{recordName}
         ]]>
 	</select>
 </mapper>

@@ -28,6 +28,17 @@ public class RecordController {
     @Autowired
     RecordService recordService;
 
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String list(HttpServletResponse response, HttpServletRequest request) {
+        String recordName = request.getParameter("recordName");
+        User user = (User) request.getSession().getAttribute(CMSInit.CMS_USER_KEY);
+        boolean type = false;
+        type = recordService.exist(recordName, user.getProject());
+        HttpUtility.writeToClient(response, String.valueOf(type));
+        return null;
+    }
+
     /**
      * 跳转到用户报表页面
      *
@@ -61,21 +72,21 @@ public class RecordController {
         return ForwardUtility.forwardAdminView("/report/data/data_json_record_list");
     }
 
-    @RequestMapping(value = "delete",method = RequestMethod.GET)
-    public void delete(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    public void delete(HttpServletRequest request, HttpServletResponse response) {
         Integer id = Integer.parseInt(request.getParameter("id"));
         User user = (User) request.getSession().getAttribute(CMSInit.CMS_USER_KEY);
         recordService.delete(id, user.getProject());
         HttpUtility.writeToClient(response, CommonUtility.toJson(new JsonResponse()));
     }
 
-    @RequestMapping(value = "add",method = RequestMethod.GET)
-    public String goAdd(HttpServletRequest request,HttpServletResponse response){
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String goAdd(HttpServletRequest request, HttpServletResponse response) {
         return ForwardUtility.forwardAdminView("/report/add_record");
     }
 
-    @RequestMapping(value = "add",method = RequestMethod.POST)
-    public void addRecord(HttpServletRequest request, HttpServletResponse response){
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    public void addRecord(HttpServletRequest request, HttpServletResponse response) {
         String recordName = request.getParameter("recordName");
         String recordValue = request.getParameter("recordValue");
 
@@ -83,12 +94,12 @@ public class RecordController {
         Assert.notNull(recordValue);
 
         User user = (User) request.getSession().getAttribute(CMSInit.CMS_USER_KEY);
-        recordService.add(recordName ,recordValue , user.getProject(),user.getId());
+        recordService.add(recordName, recordValue, user.getProject(), user.getId());
         HttpUtility.writeToClient(response, CommonUtility.toJson(new JsonResponse()));
     }
 
-    @RequestMapping(value = "update",method = RequestMethod.GET)
-    public String goUpdate(HttpServletRequest request,HttpServletResponse response){
+    @RequestMapping(value = "/update", method = RequestMethod.GET)
+    public String goUpdate(HttpServletRequest request, HttpServletResponse response) {
         Integer id = Integer.parseInt(request.getParameter("id"));
         String recordName = request.getParameter("recordName");
         String recordValue = request.getParameter("recordValue");
@@ -104,8 +115,8 @@ public class RecordController {
         return ForwardUtility.forwardAdminView("/report/update_record");
     }
 
-    @RequestMapping(value = "update",method = RequestMethod.POST)
-    public void updateRecord(HttpServletRequest request,HttpServletResponse response){
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public void updateRecord(HttpServletRequest request, HttpServletResponse response) {
         Integer id = Integer.parseInt(request.getParameter("id"));
         String recordName = request.getParameter("recordName");
         String recordValue = request.getParameter("recordValue");

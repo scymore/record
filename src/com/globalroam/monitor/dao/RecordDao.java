@@ -17,11 +17,13 @@ public interface RecordDao {
      * @param dataSource  数据源
      * @return
      */
-    List<Record> getAll(String projectName, String fromDate, String toDate, String dataSource,Integer userId,Integer pageNum, Integer pageSize);
+    List<Record> getAll(String projectName, String fromDate, String toDate, String dataSource, Integer userId, Integer pageNum, Integer pageSize);
 
-    Integer delete(Integer id,String projectName);
+    Integer delete(Integer id, String projectName);
 
-    Integer add(String recordName,String recordValue, String projectName,Integer id);
+    Integer add(String recordName, String recordValue, String projectName, Integer id);
 
-    Integer update(Integer id,String recordName,String recordValue,String projectName);
+    Integer update(Integer id, String recordName, String recordValue, String projectName);
+
+    List<Record> exist(String recordName, String projectName);
 }

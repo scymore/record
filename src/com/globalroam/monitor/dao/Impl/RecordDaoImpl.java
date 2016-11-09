@@ -36,7 +36,7 @@ public class RecordDaoImpl implements RecordDao {
      * @return
      */
     @Override
-    public List<Record> getAll(String projectName, String fromDate, String toDate, String dataSource,Integer userId,Integer pageNum, Integer pageSize) {
+    public List<Record> getAll(String projectName, String fromDate, String toDate, String dataSource, Integer userId, Integer pageNum, Integer pageSize) {
         sqlSession = mdsSqlSession.getSQLSession(projectName);
 
         Map<String, Object> params = new HashMap<String, Object>();
@@ -46,7 +46,7 @@ public class RecordDaoImpl implements RecordDao {
         params.put("fromDate", fromDate);
         params.put("toDate", toDate);
         params.put("format", "%Y-%c-%d %h:%i:%s");
-        params.put("userId",userId);
+        params.put("userId", userId);
 
         String method = this.getClass().getName() + "." + "getAll";
 
@@ -56,36 +56,46 @@ public class RecordDaoImpl implements RecordDao {
     }
 
     @Override
-    public Integer delete(Integer id,String projectName) {
+    public Integer delete(Integer id, String projectName) {
         sqlSession = mdsSqlSession.getSQLSession(projectName);
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("id",id);
+        params.put("id", id);
         String method = this.getClass().getName() + "." + "delete";
         logger.debug("execute:" + method);
-        return sqlSession.delete(method,params);
+        return sqlSession.delete(method, params);
     }
 
     @Override
-    public Integer add(String recordName, String recordValue, String projectName,Integer id) {
+    public Integer add(String recordName, String recordValue, String projectName, Integer id) {
         sqlSession = mdsSqlSession.getSQLSession(projectName);
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("recordName",recordName);
-        params.put("recordValue",recordValue);
-        params.put("id",id);
+        params.put("recordName", recordName);
+        params.put("recordValue", recordValue);
+        params.put("id", id);
         String method = this.getClass().getName() + "." + "add";
         logger.debug("execute:" + method);
-        return sqlSession.insert(method,params);
+        return sqlSession.insert(method, params);
     }
 
     @Override
     public Integer update(Integer id, String recordName, String recordValue, String projectName) {
         sqlSession = mdsSqlSession.getSQLSession(projectName);
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("recordName",recordName);
-        params.put("recordValue",recordValue);
-        params.put("id",id);
+        params.put("recordName", recordName);
+        params.put("recordValue", recordValue);
+        params.put("id", id);
         String method = this.getClass().getName() + "." + "update";
         logger.debug("execute:" + method);
         return sqlSession.insert(method, params);
+    }
+
+    @Override
+    public List<Record> exist(String recordName, String projectName) {
+        sqlSession = mdsSqlSession.getSQLSession(projectName);
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("recordName", recordName);
+        String method = this.getClass().getName() + "." + "exist";
+        logger.debug("execute:" + method);
+        return sqlSession.selectList(method, params);
     }
 }
